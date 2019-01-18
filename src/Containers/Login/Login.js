@@ -1,0 +1,203 @@
+import React from "react";
+// import { Link } from "react-router-dom";
+// import { connect } from "react-redux";
+// import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+// import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import TextField from "@material-ui/core/TextField";
+import { withTheme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+// import { userActions } from '../_actions';
+
+const styles = theme => ({
+  card: {
+    width: 300,
+    height: 300,
+    marginTop: 180
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    height: 50
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
+  }
+});
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.props.dispatch(userActions.logout());
+
+    this.state = {
+      userName: "",
+      password: "",
+      isSubmitted: false,
+      userNameReq: "",
+      passwordReq: "",
+      isUserNameValid: true,
+      isPasswordValid: true,
+      isTouched: false
+    };
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleUserChange = event => {
+    const userName = event.target.value;
+    if (userName !== "") {
+      this.setState({
+        userNameReq: "",
+        isUserNameValid: true,
+        isTouched: true
+      });
+    } else {
+      this.setState({
+        userNameReq: "Username is mandatory",
+        isUserNameValid: false,
+        isTouched: true
+      });
+    }
+
+    this.setState({ userName: userName });
+  };
+  handlePassChange = event => {
+    const password = event.target.value;
+    if (password !== "") {
+      this.setState({
+        passwordReq: "",
+        isPasswordValid: true,
+        isTouched: true
+      });
+    } else {
+      this.setState({
+        passwordReq: "Password is mandatory",
+        isPasswordValid: false,
+        isTouched: true
+      });
+    }
+    this.setState({ password: password });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(this.state.userName);
+    console.log(this.state.password);
+
+    // this.setState({ isSubmitted: true });
+    // const { userName, password } = this.state;
+    // const { dispatch } = this.props;
+    // if (userName && password) {
+    //   dispatch(userActions.login(userName, password));
+    // }
+  };
+
+  render() {
+    const { classes } = this.props;
+    // const { loggingIn } = this.props;
+    // const { username, password, submitted } = this.state;
+    return (
+      <div>
+        <header />
+        <section>
+          <Card className={classes.card} raised>
+            <CardContent>
+              <form className={classes.container} noValidate autoComplete="off">
+                <TextField
+                  error={!this.state.isUserNameValid}
+                  required
+                  id="userNameInp"
+                  label="Username"
+                  className={classes.textField}
+                  value={this.state.userName}
+                  onChange={this.handleUserChange}
+                  margin="normal"
+                  variant="outlined"
+                />
+                {!this.state.isUserNameValid ? (
+                  <Typography align="center" color="error">
+                    {this.state.userNameReq}
+                  </Typography>
+                ) : null}
+
+                <TextField
+                  error={!this.state.isPasswordValid}
+                  required
+                  id="passwordInp"
+                  label="Password"
+                  className={classes.textField}
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.handlePassChange}
+                  autoComplete="current-password"
+                  margin="normal"
+                  variant="outlined"
+                />
+                {!this.state.isPasswordValid ? (
+                  <Typography align="center" color="error">
+                    {this.state.passwordReq}
+                  </Typography>
+                ) : null}
+                <Button
+                  disabled={
+                    !this.state.isTouched ||
+                    !this.state.isPasswordValid ||
+                    !this.state.isUserNameValid
+                  }
+                  variant="outlined"
+                  color="primary"
+                  className={classes.button}
+                  size="small"
+                  type="submit"
+                  onClick={this.handleSubmit}
+                >
+                  Login
+                </Button>
+              </form>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+                size="small"
+              >
+                Register
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+        <footer />
+      </div>
+    );
+  }
+}
+
+// function mapStateToProps(state) {
+//   const { loggingIn } = state.authentication;
+//   return {
+//     loggingIn
+//   };
+// }
+
+// function mapDispatchToProps(state) {
+//   const { loggingIn } = state.authentication;
+//   return {
+//     loggingIn
+//   };
+// }
+
+// const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+// export default Login;
+export default withTheme()(withStyles(styles)(Login));
