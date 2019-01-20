@@ -2,12 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-// import Icon from "@material-ui/core/Icon";
 import UpdateTask from "../UpdateTask/UpdateTask";
 import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
@@ -51,7 +49,7 @@ class TaskDetails extends React.Component {
         method: "DELETE"
       })
       .then(
-        response => {
+        () => {
           console.log("Task Deleted");
           this.props.fetchUserTasks();
         },
@@ -76,7 +74,7 @@ class TaskDetails extends React.Component {
         }
       )
       .then(
-        response => {
+        () => {
           console.log("Task Updated");
           this.props.fetchUserTasks();
         },

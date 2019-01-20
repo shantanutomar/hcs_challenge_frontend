@@ -61,7 +61,7 @@ class AddTasks extends React.Component {
             </Typography>
             <Form
               onSubmit={this.props.handleCreateTask}
-              initialValues={{ taskDesc: "", taskDueDate: "" }}
+              initialValues={{ taskDesc: "", taskDueDate: Date.now() }}
               validate={this.validate}
               render={({ submitting, pristine, values }) => (
                 <form
@@ -103,6 +103,4 @@ class AddTasks extends React.Component {
     );
   }
 }
-const SimpleModalWrapped = withStyles(styles)(AddTasks);
-
-export default SimpleModalWrapped;
+export default withStyles(styles)(AddTasks);

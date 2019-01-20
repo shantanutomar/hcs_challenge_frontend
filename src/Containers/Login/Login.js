@@ -89,7 +89,8 @@ class Login extends React.Component {
                           keyName="password"
                           textFieldProps={{
                             required: true,
-                            label: "Password"
+                            label: "Password",
+                            type: "password"
                           }}
                         />
                         <Button

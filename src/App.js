@@ -7,7 +7,6 @@ import { Router, Route, Switch } from "react-router-dom";
 import { history } from "./Helpers/history";
 import PrivateRoute from "./Containers/PrivateRoute/PrivateRoute";
 import HomePage from "./Containers/HomePage/HomePage";
-// import HandleTasks from "./Containers/HandleTasks/HandleTasks";
 
 class App extends Component {
   render() {

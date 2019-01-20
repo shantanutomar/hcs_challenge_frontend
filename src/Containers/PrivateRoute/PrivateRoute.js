@@ -7,7 +7,6 @@ const PrivateRoute = ({ renderFunc, user, ...rest }) => {
     <Route
       {...rest}
       render={routeProps =>
-        //   localStorage.getItem("user") ? (
         user ? (
           renderFunc(routeProps)
         ) : (

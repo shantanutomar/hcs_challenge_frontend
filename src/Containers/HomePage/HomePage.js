@@ -111,6 +111,7 @@ class HomePage extends React.Component {
             {`${this.props.user.firstName} ${this.props.user.lastName}`}
           </h3>
           <h3>About : {`${this.props.user.userDetails}`}</h3>
+          <h3>Age : {`${this.props.user.userAge}`}</h3>
         </section>
         <AddTasks
           isAddOpen={this.state.isAddOpen}

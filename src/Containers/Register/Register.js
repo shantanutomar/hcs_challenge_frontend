@@ -105,7 +105,6 @@ class Register extends React.Component {
                       textFieldProps={{
                         required: true,
                         label: "User Name"
-                        // type: "number"
                       }}
                     />
                     <CustomTextField
@@ -146,9 +145,6 @@ class Register extends React.Component {
     );
   }
 }
-
-// function mapStateToProps(state) {
-// }
 
 var mapDispatchToProps = dispatch => {
   return {

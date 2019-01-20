@@ -105,6 +105,4 @@ class UpdateTask extends React.Component {
     );
   }
 }
-const SimpleModalWrapped = withStyles(styles)(UpdateTask);
-
-export default SimpleModalWrapped;
+export default withStyles(styles)(UpdateTask);

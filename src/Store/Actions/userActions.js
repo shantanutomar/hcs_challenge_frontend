@@ -1,5 +1,4 @@
 import { userActionsConstants } from "./userActionsConstants";
-// import { axiosInterceptor } from "../../Helpers/handleResponse";
 import { history } from "../../Helpers/history";
 import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
@@ -30,7 +29,6 @@ function authenticate(username, password) {
       .then(
         user => {
           dispatch(success(user));
-          // localStorage.setItem({ user: user });
           history.push("/");
         },
         error => {
