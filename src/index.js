@@ -7,6 +7,14 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 // import purple from "@material-ui/core/colors/purple";
 import green from "@material-ui/core/colors/green";
 import { red } from "@material-ui/core/colors";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+// import { createLogger } from "redux-logger";
+import { Provider } from "react-redux";
+import rootReducer from "./Store/Reducers/rootReducer";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/es/storage/session";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 const theme = createMuiTheme({
   palette: {
@@ -22,10 +30,23 @@ const theme = createMuiTheme({
   }
 });
 
+const persistConfig = {
+  key: "user",
+  storage
+};
+var pReducer = persistReducer(persistConfig, rootReducer);
+
+const store = createStore(pReducer, applyMiddleware(thunkMiddleware));
+var persistor = persistStore(store);
+
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <App />
-  </MuiThemeProvider>,
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <PersistGate persistor={persistor} loading={null}>
+        <App />
+      </PersistGate>
+    </MuiThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );
 
