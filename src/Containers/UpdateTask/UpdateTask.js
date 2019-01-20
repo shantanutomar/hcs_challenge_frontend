@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 
+const getDate = dateStr => dateStr.slice(0, 10);
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -45,8 +46,7 @@ class UpdateTask extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-
+    const { classes, taskData } = this.props;
     return (
       <div>
         <Modal
@@ -62,8 +62,8 @@ class UpdateTask extends React.Component {
             <Form
               onSubmit={this.props.handleUpdateTask}
               initialValues={{
-                taskDesc: this.props.taskData.taskDesc,
-                taskDueDate: this.props.taskData.taskDueDate
+                taskDesc: taskData.taskDesc,
+                taskDueDate: getDate(taskData.taskDueDate)
               }}
               validate={this.validate}
               render={({ submitting, pristine, values }) => (

@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,8 +10,13 @@ import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
 import { connect } from "react-redux";
 import { withTheme } from "@material-ui/core/styles";
+import distanceInWords from "date-fns/distance_in_words";
 
 const styles = theme => ({
+  paper: {
+    marginBottom: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 2
+  },
   card: {
     minWidth: 275
   },
@@ -32,6 +36,11 @@ const styles = theme => ({
   },
   input: {
     display: "none"
+  },
+  cardFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 
@@ -99,7 +108,7 @@ class TaskDetails extends React.Component {
     });
   };
   render() {
-    const { classes } = this.props;
+    const { classes, taskData } = this.props;
 
     return (
       <div>
@@ -110,40 +119,22 @@ class TaskDetails extends React.Component {
           taskData={this.props.taskData}
         />
 
-        <Card className={classes.card} raised>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              Task
+        <Paper className={classes.paper}>
+          <Typography variant="body1">{taskData.taskDesc}</Typography>
+          <div className={classes.cardFooter}>
+            <Typography variant="caption" inline>
+              {`Due in ${distanceInWords(new Date(taskData.taskDueDate))}`}
             </Typography>
-            <Typography component="p">
-              Details : {this.props.taskData.taskDesc}
-            </Typography>
-            <Typography component="p">
-              Due Date : {this.props.taskData.taskDueDate}
-            </Typography>
-            <Typography component="p">
-              Created On : {this.props.taskData.taskCreatedOn}
-            </Typography>
-            <IconButton
-              className={classes.button}
-              aria-label="Delete"
-              onClick={this.handleTaskDelete}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <IconButton
-              className={classes.button}
-              aria-label="Edit"
-              onClick={this.openUpdateModel}
-            >
-              <EditIcon />
-            </IconButton>
-          </CardContent>
-        </Card>
+            <span>
+              <IconButton aria-label="Delete" onClick={this.handleTaskDelete}>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton aria-label="Edit" onClick={this.openUpdateModel}>
+                <EditIcon />
+              </IconButton>
+            </span>
+          </div>
+        </Paper>
       </div>
     );
   }
