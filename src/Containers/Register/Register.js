@@ -16,7 +16,7 @@ const styles = theme => ({
     width: "100%"
   },
   cardRoot: {
-    width: "70%",
+    width: "80%",
     margin: "24px auto"
   },
   container: {

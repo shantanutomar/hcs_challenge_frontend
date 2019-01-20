@@ -6,14 +6,15 @@ import * as serviceWorker from "./serviceWorker";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
 import { red } from "@material-ui/core/colors";
-import { createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
 import { Provider } from "react-redux";
-import rootReducer from "./Store/Reducers/rootReducer";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/es/storage/session";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import "typeface-roboto";
+import createStore from "./Store/Reducers/createStore";
+import customAxios from "./Helpers/customAxios";
+import {
+  hideSnackBottom,
+  showMessageSnackBottom
+} from "./Store/Actions/appActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -29,14 +30,23 @@ const theme = createMuiTheme({
   }
 });
 
-const persistConfig = {
-  key: "user",
-  storage
-};
-var pReducer = persistReducer(persistConfig, rootReducer);
+let { store, persistor } = createStore();
 
-const store = createStore(pReducer, applyMiddleware(thunkMiddleware));
-var persistor = persistStore(store);
+customAxios.interceptors.response.use(
+  response => {
+    console.log(response);
+    // store.dispatch(hideSnackBottom());
+    // let toastMessage = response.data.message;
+    // store.dispatch(showMessageSnackBottom(toastMessage, "success", 3000));
+    return response;
+  },
+  error => {
+    store.dispatch(hideSnackBottom());
+    let toastMessage = error.response.data.message;
+    store.dispatch(showMessageSnackBottom(toastMessage, "error", 3000));
+    return Promise.reject(error);
+  }
+);
 
 ReactDOM.render(
   <Provider store={store}>

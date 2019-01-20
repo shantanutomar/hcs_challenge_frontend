@@ -14,10 +14,11 @@ import { Form } from "react-final-form";
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit * 5
+    padding: theme.spacing.unit * 5,
+    margin: "0 auto"
   },
   cardRoot: {
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 4
   },
   container: {
     display: "flex",

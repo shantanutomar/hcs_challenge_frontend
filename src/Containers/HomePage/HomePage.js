@@ -54,7 +54,8 @@ const styles = theme => ({
       color: grey[50],
       borderColor: grey[50]
     },
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
+    outline: "none"
   },
   horzDivider: {
     height: "1px",
@@ -69,6 +70,10 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
     display: "flex"
+  },
+  loaderStyle: {
+    display: "flex",
+    justifyContent: "center"
   }
 });
 
@@ -213,7 +218,13 @@ class HomePage extends React.Component {
             Add Task
           </Button>
           <section>
-            {this.state.isLoadingTasks ? <Loader /> : userTasks}
+            {this.state.isLoadingTasks ? (
+              <div className={classes.loaderStyle}>
+                <Loader />
+              </div>
+            ) : (
+              userTasks
+            )}
           </section>
         </section>
       </div>

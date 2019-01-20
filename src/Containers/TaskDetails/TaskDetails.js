@@ -15,7 +15,8 @@ import distanceInWords from "date-fns/distance_in_words";
 const styles = theme => ({
   paper: {
     marginBottom: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
+    overflowWrap: "break-word"
   },
   card: {
     minWidth: 275
@@ -109,6 +110,8 @@ class TaskDetails extends React.Component {
   };
   render() {
     const { classes, taskData } = this.props;
+    console.log(Date.now());
+    console.log(taskData.taskDueDate);
 
     return (
       <div>
@@ -118,12 +121,14 @@ class TaskDetails extends React.Component {
           closeUpdateModel={this.closeUpdateModal}
           taskData={this.props.taskData}
         />
-
         <Paper className={classes.paper}>
           <Typography variant="body1">{taskData.taskDesc}</Typography>
           <div className={classes.cardFooter}>
             <Typography variant="caption" inline>
-              {`Due in ${distanceInWords(new Date(taskData.taskDueDate))}`}
+              {`Due in ${distanceInWords(
+                Date.now(),
+                new Date(taskData.taskDueDate)
+              )}`}
             </Typography>
             <span>
               <IconButton aria-label="Delete" onClick={this.handleTaskDelete}>

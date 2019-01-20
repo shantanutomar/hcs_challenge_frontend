@@ -1,35 +1,19 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
+import Dialog from "@material-ui/core/Dialog";
 
 const getDate = dateStr => dateStr.slice(0, 10);
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 const styles = theme => ({
-  paper: {
-    position: "absolute",
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: "none"
+  root: {
+    padding: theme.spacing.unit * 4
+  },
+  dialogPaper: {
+    width: "80%"
   }
 });
 
@@ -49,13 +33,16 @@ class UpdateTask extends React.Component {
     const { classes, taskData } = this.props;
     return (
       <div>
-        <Modal
+        <Dialog
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={this.props.isUpdateOpen}
           onClose={this.props.closeUpdateModel}
+          classes={{
+            paper: classes.dialogPaper
+          }}
         >
-          <div style={getModalStyle()} className={classes.paper}>
+          <div className={classes.root}>
             <Typography variant="h6" id="modal-title">
               Update Task
             </Typography>
@@ -100,7 +87,7 @@ class UpdateTask extends React.Component {
               )}
             />
           </div>
-        </Modal>
+        </Dialog>
       </div>
     );
   }

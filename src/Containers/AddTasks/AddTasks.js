@@ -2,14 +2,9 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Dialog from "@material-ui/core/Dialog";
-import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
 
 const styles = theme => ({
   root: {
@@ -34,7 +29,6 @@ class AddTasks extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Dialog
         aria-labelledby="simple-modal-title"
@@ -51,7 +45,10 @@ class AddTasks extends React.Component {
           </Typography>
           <Form
             onSubmit={this.props.handleCreateTask}
-            initialValues={{ taskDesc: "", taskDueDate: Date.now() }}
+            initialValues={{
+              taskDesc: "",
+              taskDueDate: new Date().toISOString().slice(0, 10)
+            }}
             validate={this.validate}
             render={({ submitting, pristine, values }) => (
               <form

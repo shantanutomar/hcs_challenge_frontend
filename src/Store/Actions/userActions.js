@@ -27,14 +27,13 @@ function authenticate(username, password) {
         }
       )
       .then(
-        user => {
-          dispatch(success(user));
+        response => {
+          dispatch(success(response));
           history.push("/");
         },
         error => {
           console.log("In error");
           dispatch(failure(error));
-          alert(error);
         }
       );
   };
@@ -43,6 +42,7 @@ function authenticate(username, password) {
     return { type: userActionsConstants.AUTH_REQUEST };
   }
   function success(user) {
+    console.log(user);
     return { type: userActionsConstants.AUTH_SUCCESS, user };
   }
   function failure(error) {
@@ -67,12 +67,11 @@ function register(userData) {
         user => {
           dispatch(success());
           history.push("/login");
-          alert("Registration Successful");
         },
         error => {
           console.log("In error");
           dispatch(failure(error));
-          alert(error);
+          // alert(error);
         }
       );
   };
