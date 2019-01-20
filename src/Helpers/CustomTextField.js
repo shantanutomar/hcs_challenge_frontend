@@ -2,36 +2,44 @@ import React, { Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Field } from "react-final-form";
+import red from "@material-ui/core/colors/red";
 
 const styles = theme => ({
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    height: 45
+  textFieldRoot: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%"
+  },
+  errorContainer: {
+    fontSize: theme.spacing.unit * 1.5,
+    fontWeight: 300,
+    color: red[500]
   }
 });
 
 const CustomTextField = props => {
+  const { classes } = props;
   return (
     <Field
       name={props.keyName}
       render={({ input, meta }) => (
-        <Fragment>
+        <div className={classes.textFieldRoot}>
           <TextField
+            fullWidth
             {...props.textFieldProps}
             error={Boolean(meta.error) && meta.touched}
             {...input}
-            className={styles.textField}
             margin="normal"
             variant="outlined"
           />
           {meta.touched && meta.error ? (
-            <span style={{ display: "block", color: "red" }}>{meta.error}</span>
+            <span className={classes.errorContainer}>{meta.error}</span>
           ) : null}
-        </Fragment>
+        </div>
       )}
     />
   );
 };
 
-export default CustomTextField;
+export default withStyles(styles)(CustomTextField);

@@ -13,17 +13,15 @@ class App extends Component {
     return (
       <div className="App">
         <Router history={history}>
-          <div>
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/"
-                renderFunc={routeProps => <HomePage {...routeProps} />}
-              />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-            </Switch>
-          </div>
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/"
+              renderFunc={routeProps => <HomePage {...routeProps} />}
+            />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </Switch>
         </Router>
       </div>
     );

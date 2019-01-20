@@ -6,21 +6,22 @@ import { withTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { userActions } from "../../Store/Actions/userActions";
 import { connect } from "react-redux";
+import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 
 const styles = theme => ({
-  card: {
-    width: 300,
-    height: 300,
-    marginTop: 180
+  root: {
+    padding: theme.spacing.unit * 5
+  },
+  cardRoot: {
+    padding: theme.spacing.unit * 2
   },
   container: {
     display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center"
+    flexDirection: "column"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -28,7 +29,7 @@ const styles = theme => ({
     height: 50
   },
   button: {
-    margin: theme.spacing.unit
+    marginBottom: theme.spacing.unit
   },
   input: {
     display: "none"
@@ -57,15 +58,18 @@ class Login extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         {this.props.loggingIn ? (
           <Loader />
         ) : (
           <React.Fragment>
             <header />
             <section>
-              <Card className={classes.card} raised>
+              <Card className={classes.cardRoot} raised>
                 <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    HealthCareSystems
+                  </Typography>
                   <Form
                     onSubmit={this.handleSubmit}
                     initialValues={{ userName: "", password: "" }}
@@ -107,16 +111,16 @@ class Login extends React.Component {
                     )}
                   />
 
-                  <Link to="/register">
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      className={classes.button}
-                      size="small"
-                    >
-                      Register
-                    </Button>
-                  </Link>
+                  <Button
+                    fullWidth
+                    component={Link}
+                    to="/register"
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                  >
+                    Register
+                  </Button>
                 </CardContent>
               </Card>
             </section>

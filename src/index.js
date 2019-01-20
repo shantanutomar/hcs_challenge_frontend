@@ -13,6 +13,7 @@ import rootReducer from "./Store/Reducers/rootReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/es/storage/session";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import "typeface-roboto";
 
 const theme = createMuiTheme({
   palette: {
