@@ -1,13 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
+// import Icon from "@material-ui/core/Icon";
+import UpdateTask from "../UpdateTask/UpdateTask";
+import customAxios from "../../Helpers/customAxios";
+import { API_PATH } from "../../api";
+import { connect } from "react-redux";
+import { withTheme } from "@material-ui/core/styles";
 
-const styles = {
+const styles = theme => ({
   card: {
     minWidth: 275
   },
@@ -21,48 +28,135 @@ const styles = {
   },
   pos: {
     marginBottom: 12
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
   }
-};
+});
 
-function SimpleCard(props) {
-  const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
+class TaskDetails extends React.Component {
+  state = {
+    isEditModelOpen: false
+  };
+  handleTaskDelete = () => {
+    customAxios
+      .delete(`${API_PATH.dev.BASE_URL}/tasks/${this.props.taskData._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + this.props.user.token
+        },
+        method: "DELETE"
+      })
+      .then(
+        response => {
+          console.log("Task Deleted");
+          this.props.fetchUserTasks();
+        },
+        error => {
+          console.log("In error");
+        }
+      );
+  };
+  handleTaskUpdate = (event, updateData) => {
+    event.preventDefault();
 
-  return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          be
-          {bull}
-          nev
-          {bull}o{bull}
-          lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-  );
+    customAxios
+      .put(
+        `${API_PATH.dev.BASE_URL}/tasks/${this.props.taskData._id}`,
+        { ...this.props.taskData, ...updateData },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + this.props.user.token
+          },
+          method: "PUT"
+        }
+      )
+      .then(
+        response => {
+          console.log("Task Updated");
+          this.props.fetchUserTasks();
+        },
+        error => {
+          console.log("In error");
+        }
+      );
+
+    this.setState({
+      isUpdateTaskOpen: true,
+      isAddTaskOpen: true
+    });
+  };
+  openUpdateModel = () => {
+    this.setState({
+      isEditModelOpen: true
+    });
+  };
+  closeUpdateModal = () => {
+    this.setState({
+      isEditModelOpen: false
+    });
+  };
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+        <UpdateTask
+          isUpdateOpen={this.state.isEditModelOpen}
+          handleUpdateTask={this.handleTaskUpdate}
+          closeUpdateModel={this.closeUpdateModal}
+          taskData={this.props.taskData}
+        />
+
+        <Card className={classes.card} raised>
+          <CardContent>
+            <Typography
+              className={classes.title}
+              color="textSecondary"
+              gutterBottom
+            >
+              Task
+            </Typography>
+            <Typography component="p">
+              Details : {this.props.taskData.taskDesc}
+            </Typography>
+            <Typography component="p">
+              Due Date : {this.props.taskData.taskDueDate}
+            </Typography>
+            <Typography component="p">
+              Created On : {this.props.taskData.taskCreatedOn}
+            </Typography>
+            <IconButton
+              className={classes.button}
+              aria-label="Delete"
+              onClick={this.handleTaskDelete}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <IconButton
+              className={classes.button}
+              aria-label="Edit"
+              onClick={this.openUpdateModel}
+            >
+              <EditIcon />
+            </IconButton>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 }
 
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired
+var mapStateToProps = state => {
+  return {
+    user: state.userReducer.user.data
+  };
 };
-
-export default withStyles(styles)(SimpleCard);
+export default connect(
+  mapStateToProps,
+  null
+)(withTheme()(withStyles(styles)(TaskDetails)));

@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({ renderFunc, user, ...rest }) => {
-  // console.log(user);
   return (
     <Route
       {...rest}
@@ -21,7 +20,6 @@ const PrivateRoute = ({ renderFunc, user, ...rest }) => {
   );
 };
 var mapStateToProps = state => {
-  // console.log(state.userReducer.user.data);
   return {
     user: state.userReducer.user.data
   };

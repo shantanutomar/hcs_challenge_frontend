@@ -11,8 +11,6 @@ export const userActions = {
 };
 
 export function logout() {
-  // remove user from local storage to log user out
-  console.log("In Logout");
   localStorage.removeItem("user");
   return { type: userActionsConstants.USER_LOGOUT };
 }

@@ -18,6 +18,7 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         loggedIn: true,
+        loggingIn: false,
         user: action.user
       };
     case userActionsConstants.AUTH_FAILURE:

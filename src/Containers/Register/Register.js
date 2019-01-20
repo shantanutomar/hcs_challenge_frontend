@@ -76,6 +76,7 @@ class Register extends React.Component {
                   <form
                     className={classes.container}
                     onSubmit={event => this.handleSubmit(values, event)}
+                    autoComplete="off"
                   >
                     <CustomTextField
                       keyName="firstName"

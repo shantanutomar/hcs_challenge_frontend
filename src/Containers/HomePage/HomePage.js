@@ -7,6 +7,8 @@ import Button from "@material-ui/core/Button";
 import AddTasks from "../AddTasks/AddTasks";
 import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
+import Loader from "../Loader/Loader";
+import TaskDetails from "../TaskDetails/TaskDetails";
 
 const styles = theme => ({
   button: {
@@ -17,11 +19,13 @@ const styles = theme => ({
 class HomePage extends React.Component {
   state = {
     isAddOpen: false,
-    userTasks: []
+    userTasks: [],
+    isLoadingTasks: false
   };
   fetchUserTasks = () => {
-    console.log(this.props.user._id);
-    // Axios call
+    this.setState({
+      isLoadingTasks: true
+    });
     customAxios
       .get(`${API_PATH.dev.BASE_URL}/users/${this.props.user._id}/tasks/`, {
         headers: {
@@ -32,11 +36,10 @@ class HomePage extends React.Component {
       })
       .then(
         tasks => {
-          console.log(tasks.data);
-          this.setState({ userTasks: tasks.data });
+          this.setState({ userTasks: tasks.data, isLoadingTasks: false });
         },
         error => {
-          console.log("In error");
+          this.setState({ isLoadingTasks: false, userTasks: [] });
         }
       );
   };
@@ -58,7 +61,6 @@ class HomePage extends React.Component {
   };
   handleCreateTask = (event, createTaskData) => {
     event.preventDefault();
-    console.log(this.props.user);
     customAxios
       .post(
         `${API_PATH.dev.BASE_URL}/tasks/`,
@@ -73,7 +75,6 @@ class HomePage extends React.Component {
       )
       .then(
         response => {
-          console.log("Task Created");
           this.fetchUserTasks();
           this.closeAddModel();
         },
@@ -89,6 +90,18 @@ class HomePage extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    let userTasks = [];
+    if (this.state.userTasks.length) {
+      userTasks = this.state.userTasks.map(ele => {
+        return (
+          <TaskDetails
+            key={ele._id}
+            taskData={ele}
+            fetchUserTasks={this.fetchUserTasks}
+          />
+        );
+      });
+    }
 
     return (
       <div>
@@ -122,7 +135,7 @@ class HomePage extends React.Component {
         >
           Logout
         </Button>
-        <section />
+        <section>{this.state.isLoadingTasks ? <Loader /> : userTasks}</section>
       </div>
     );
   }

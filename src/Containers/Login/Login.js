@@ -2,14 +2,14 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import TextField from "@material-ui/core/TextField";
 import { withTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import { userActions } from "../../Store/Actions/userActions";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import CustomTextField from "../../Helpers/CustomTextField";
+import { Form } from "react-final-form";
 
 const styles = theme => ({
   card: {
@@ -36,61 +36,21 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      userName: "",
-      password: "",
-      isSubmitted: false,
-      userNameReq: "",
-      passwordReq: "",
-      isUserNameValid: true,
-      isPasswordValid: true,
-      isTouched: false
-    };
-  }
-
-  handleUserChange = event => {
-    const userName = event.target.value;
-    if (userName !== "") {
-      this.setState({
-        userNameReq: "",
-        isUserNameValid: true,
-        isTouched: true
-      });
-    } else {
-      this.setState({
-        userNameReq: "Username is mandatory",
-        isUserNameValid: false,
-        isTouched: true
-      });
+  validate = values => {
+    const errors = {};
+    if (!values.userName) {
+      errors.userName = "Required";
     }
-
-    this.setState({ userName: userName });
-  };
-  handlePassChange = event => {
-    const password = event.target.value;
-    if (password !== "") {
-      this.setState({
-        passwordReq: "",
-        isPasswordValid: true,
-        isTouched: true
-      });
-    } else {
-      this.setState({
-        passwordReq: "Password is mandatory",
-        isPasswordValid: false,
-        isTouched: true
-      });
+    if (!values.password) {
+      errors.password = "Required";
     }
-    this.setState({ password: password });
+    return errors;
   };
 
-  handleSubmit = event => {
+  handleSubmit = (values, event) => {
     event.preventDefault();
-    if (this.state.userName && this.state.password) {
-      this.props.authenticate(this.state.userName, this.state.password);
+    if (values.userName && values.password) {
+      this.props.authenticate(values.userName, values.password);
     }
   };
 
@@ -106,62 +66,46 @@ class Login extends React.Component {
             <section>
               <Card className={classes.card} raised>
                 <CardContent>
-                  <form
-                    className={classes.container}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    <TextField
-                      error={!this.state.isUserNameValid}
-                      required
-                      id="userNameInp"
-                      label="Username"
-                      className={classes.textField}
-                      value={this.state.userName}
-                      onChange={this.handleUserChange}
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    {!this.state.isUserNameValid ? (
-                      <Typography align="center" color="error">
-                        {this.state.userNameReq}
-                      </Typography>
-                    ) : null}
+                  <Form
+                    onSubmit={this.handleSubmit}
+                    initialValues={{ userName: "", password: "" }}
+                    validate={this.validate}
+                    render={({ submitting, pristine, values }) => (
+                      <form
+                        className={classes.container}
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={event => this.handleSubmit(values, event)}
+                      >
+                        <CustomTextField
+                          keyName="userName"
+                          textFieldProps={{
+                            required: true,
+                            label: "Username"
+                          }}
+                        />
 
-                    <TextField
-                      error={!this.state.isPasswordValid}
-                      required
-                      id="passwordInp"
-                      label="Password"
-                      className={classes.textField}
-                      type="password"
-                      value={this.state.password}
-                      onChange={this.handlePassChange}
-                      autoComplete="current-password"
-                      margin="normal"
-                      variant="outlined"
-                    />
-                    {!this.state.isPasswordValid ? (
-                      <Typography align="center" color="error">
-                        {this.state.passwordReq}
-                      </Typography>
-                    ) : null}
-                    <Button
-                      disabled={
-                        !this.state.isTouched ||
-                        !this.state.isPasswordValid ||
-                        !this.state.isUserNameValid
-                      }
-                      variant="outlined"
-                      color="primary"
-                      className={classes.button}
-                      size="small"
-                      type="submit"
-                      onClick={this.handleSubmit}
-                    >
-                      Login
-                    </Button>
-                  </form>
+                        <CustomTextField
+                          keyName="password"
+                          textFieldProps={{
+                            required: true,
+                            label: "Password"
+                          }}
+                        />
+                        <Button
+                          disabled={submitting || pristine}
+                          variant="outlined"
+                          color="primary"
+                          className={classes.button}
+                          size="small"
+                          type="submit"
+                        >
+                          Login
+                        </Button>
+                      </form>
+                    )}
+                  />
+
                   <Link to="/register">
                     <Button
                       variant="outlined"

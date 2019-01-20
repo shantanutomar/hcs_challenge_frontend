@@ -32,7 +32,7 @@ const styles = theme => ({
   }
 });
 
-class AddTasks extends React.Component {
+class UpdateTask extends React.Component {
   validate = values => {
     const errors = {};
     if (!values.taskDesc) {
@@ -52,22 +52,24 @@ class AddTasks extends React.Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.props.isAddOpen}
-          onClose={this.props.closeAddModel}
+          open={this.props.isUpdateOpen}
+          onClose={this.props.closeUpdateModel}
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              Add Task
+              Update Task
             </Typography>
             <Form
-              onSubmit={this.props.handleCreateTask}
-              initialValues={{ taskDesc: "", taskDueDate: "" }}
+              onSubmit={this.props.handleUpdateTask}
+              initialValues={{
+                taskDesc: this.props.taskData.taskDesc,
+                taskDueDate: this.props.taskData.taskDueDate
+              }}
               validate={this.validate}
               render={({ submitting, pristine, values }) => (
                 <form
                   className={classes.container}
-                  onSubmit={event => this.props.handleCreateTask(event, values)}
-                  autoComplete="off"
+                  onSubmit={event => this.props.handleUpdateTask(event, values)}
                 >
                   <CustomTextField
                     keyName="taskDesc"
@@ -103,6 +105,6 @@ class AddTasks extends React.Component {
     );
   }
 }
-const SimpleModalWrapped = withStyles(styles)(AddTasks);
+const SimpleModalWrapped = withStyles(styles)(UpdateTask);
 
 export default SimpleModalWrapped;
