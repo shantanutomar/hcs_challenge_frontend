@@ -203,7 +203,7 @@ class HomePage extends React.Component {
         </AppBar>
         <section className={classes.rootSection}>
           {user && (
-            <Paper className={classes.aboutUser} raised>
+            <Paper className={classes.aboutUser} raised="true">
               <div className={classes.chipNameContainer}>
                 <Typography variant="h5" inline>
                   {`Welcome ${user.firstName} ${user.lastName}`}

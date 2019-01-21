@@ -10,7 +10,7 @@ import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
 import { connect } from "react-redux";
 import { withTheme } from "@material-ui/core/styles";
-import distanceInWords from "date-fns/distance_in_words";
+import format from "date-fns/format";
 import { showMessageSnackBottom } from "../../Store/Actions/appActions";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import grey from "@material-ui/core/colors/grey";
@@ -121,19 +121,17 @@ class TaskDetails extends React.Component {
   };
   closeDeleteModal = () => {
     this.setState({
-      isDeleteOpen: false
+      isDeleteConfirmOpen: false
     });
   };
   openDeleteModel = () => {
     this.setState({
-      isDeleteOpen: true
+      isDeleteConfirmOpen: true
     });
   };
 
   render() {
     const { classes, taskData } = this.props;
-    console.log(Date.now());
-    console.log(taskData.taskDueDate);
 
     return (
       <div>
@@ -144,17 +142,17 @@ class TaskDetails extends React.Component {
           taskData={this.props.taskData}
         />
         <DeleteConfirmation
-          isDeleteOpen={this.state.isDeleteOpen}
+          isDeleteOpen={this.state.isDeleteConfirmOpen}
           handleDeleteTask={this.handleTaskDelete}
           closeDeleteConfirmModal={this.closeDeleteModal}
         />
-        <Paper className={classes.paper} raised>
+        <Paper className={classes.paper} raised="true">
           <Typography variant="body1">{taskData.taskDesc}</Typography>
           <div className={classes.cardFooter}>
             <Typography variant="caption" inline>
-              {`Due in ${distanceInWords(
-                Date.now(),
-                new Date(taskData.taskDueDate)
+              {`Due on ${format(
+                new Date(taskData.taskDueDate),
+                "Do MMM YYYY"
               )}`}
             </Typography>
             <span>

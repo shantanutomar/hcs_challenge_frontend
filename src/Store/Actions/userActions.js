@@ -53,7 +53,6 @@ function authenticate(username, password) {
     return { type: userActionsConstants.AUTH_REQUEST };
   }
   function success(user) {
-    console.log(user);
     return { type: userActionsConstants.AUTH_SUCCESS, user };
   }
   function failure(error) {

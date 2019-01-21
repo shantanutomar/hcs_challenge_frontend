@@ -1,68 +1,29 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# HealthCareSystems - Tasks App
 
-## Available Scripts
+This application allows a user to add new tasks, see and update existing tasks. This requires a user to login as an exisiting user or register to the application if he/she is a new user.
 
-In the project directory, you can run:
+The application consists of web client made in React along with a Express based API server. The server interacts with data layer in form of a MongoDB instance running on mLab (using a database cloud provider for the sake of simplicity).
 
-### `npm start`
+### Setting Up and Running
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Frontend (Web Client)
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Clone the [repository](https://github.com/shantanutomar/hcs_challenge_frontend).
+- Install all the required dependencies using `npm install`.
+- Run a development server of web client using `npm start`. This will start web local server on `http://localhost:3000/`
+- A static production build can be made using `npm run build`.
 
-### `npm test`
+#### Backend (API server)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Clone the [repository](https://github.com/shantanutomar/hcsChallengeBackend).
+- Install all the required dependencies using `npm install`.
+- Run the development server using `npm run start-dev`. This will expose the server on port 4000
+- No database server is required to be run as we are a database as a service solution (_mLab_) for managing our data layer. We could have also used a local mongoDB instance.
 
-### `npm run build`
+#### Packages Used
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- material-ui : The react material UI library that provides different Components that implements Google's Material Design
+- axios : Promise based HTTP client for the browser and node.js
+- final-form : Library provides all the form based validations for fields
+- redux : State maintainance library used for maintaining app state and authentication flows
+- redux-persist : Library which Persist and rehydrate a redux store. Maintains the state in localstorage of the browser
