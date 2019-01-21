@@ -12,7 +12,7 @@ import Loader from "../Loader/Loader";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 import grey from "@material-ui/core/colors/grey";
-
+import orange from "@material-ui/core/colors/orange";
 /*
 This is the login form for user authentication
 */
@@ -24,7 +24,7 @@ const styles = theme => ({
   },
   cardRoot: {
     padding: theme.spacing.unit * 4,
-    background: grey[100]
+    background: grey[200]
   },
   container: {
     display: "flex",
@@ -36,7 +36,11 @@ const styles = theme => ({
     height: 50
   },
   button: {
-    marginBottom: theme.spacing.unit
+    marginBottom: theme.spacing.unit,
+    "&:hover": {
+      color: orange[500],
+      borderColor: orange[500]
+    }
   },
   input: {
     display: "none"
@@ -46,8 +50,11 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     "&>span": {
-      color: grey[100]
+      color: grey[200]
     }
+  },
+  TypographyStyle: {
+    color: orange[500]
   }
 });
 
@@ -82,7 +89,11 @@ class Login extends React.Component {
             <section>
               <Card className={classes.cardRoot} raised>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    className={classes.TypographyStyle}
+                  >
                     Healthcare Systems
                   </Typography>
                   <Form
@@ -128,11 +139,11 @@ class Login extends React.Component {
 
                   <Button
                     fullWidth
+                    color="primary"
                     component={Link}
                     to="/register"
                     variant="outlined"
-                    color="secondary"
-                    size="small"
+                    className={classes.button}
                   >
                     Register
                   </Button>

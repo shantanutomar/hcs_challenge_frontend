@@ -5,7 +5,6 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import InfoIcon from "@material-ui/icons/Info";
 import CloseIcon from "@material-ui/icons/Close";
-import green from "@material-ui/core/colors/green";
 import Slide from "@material-ui/core/Slide";
 import amber from "@material-ui/core/colors/amber";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,6 +14,7 @@ import WarningIcon from "@material-ui/icons/Warning";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import { hideSnackBottom } from "../../Store/Actions/appActions";
+import orange from "@material-ui/core/colors/orange";
 
 /*
 Snackbar that will be displayed at the bottom of the screen everytime a message needs to be shown to user
@@ -49,7 +49,7 @@ const styles = theme => ({
     }
   },
   success: {
-    backgroundColor: green[600]
+    backgroundColor: orange[500]
   },
   error: {
     backgroundColor: theme.palette.error.dark

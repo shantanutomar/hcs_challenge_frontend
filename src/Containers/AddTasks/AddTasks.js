@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 import grey from "@material-ui/core/colors/grey";
+import orange from "@material-ui/core/colors/orange";
 
 /*
 Component handles Add Task flow
@@ -16,7 +17,10 @@ const styles = theme => ({
   },
   dialogPaper: {
     width: "80%",
-    background: grey[100]
+    background: grey[200]
+  },
+  TypographyStyle: {
+    color: orange[500]
   }
 });
 
@@ -45,7 +49,11 @@ class AddTasks extends React.Component {
         }}
       >
         <div className={classes.root}>
-          <Typography variant="h6" id="modal-title">
+          <Typography
+            variant="h6"
+            id="modal-title"
+            className={classes.TypographyStyle}
+          >
             Add Task
           </Typography>
           <Form

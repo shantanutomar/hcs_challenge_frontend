@@ -6,6 +6,7 @@ import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 import Dialog from "@material-ui/core/Dialog";
 import grey from "@material-ui/core/colors/grey";
+import orange from "@material-ui/core/colors/orange";
 
 /*
 Component handles update task flow
@@ -19,7 +20,10 @@ const styles = theme => ({
   },
   dialogPaper: {
     width: "80%",
-    background: grey[100]
+    background: grey[200]
+  },
+  TypographyStyle: {
+    color: orange[500]
   }
 });
 
@@ -49,7 +53,11 @@ class UpdateTask extends React.Component {
           }}
         >
           <div className={classes.root}>
-            <Typography variant="h6" id="modal-title">
+            <Typography
+              variant="h6"
+              id="modal-title"
+              className={classes.TypographyStyle}
+            >
               Update Task
             </Typography>
             <Form

@@ -24,7 +24,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
     padding: theme.spacing.unit * 2,
     overflowWrap: "break-word",
-    background: grey[100]
+    background: grey[200]
   },
   card: {
     minWidth: 275

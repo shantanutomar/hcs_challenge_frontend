@@ -16,6 +16,7 @@ import { API_PATH } from "../../api";
 import Loader from "../Loader/Loader";
 import TaskDetails from "../TaskDetails/TaskDetails";
 import { showMessageSnackBottom } from "../../Store/Actions/appActions";
+import orange from "@material-ui/core/colors/orange";
 
 /*
 This is the homepage where user enters when logged in
@@ -23,13 +24,13 @@ This is the homepage where user enters when logged in
 
 const styles = theme => ({
   appBarStyles: {
-    background: grey[100]
+    background: orange[500]
   },
   rootContainer: {
     width: "100%"
   },
   white: {
-    color: grey[50]
+    color: grey[200]
   },
   chipNameContainer: {
     display: "flex",
@@ -43,23 +44,23 @@ const styles = theme => ({
   aboutUser: {
     padding: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
-    background: grey[100],
+    background: grey[50],
     overflowWrap: "break-word"
   },
   button: {
-    color: "#000",
-    borderColor: "#000",
+    color: "#ffffff",
+    border: "1px solid #ffffff",
     "&:hover": {
       color: "#000",
       borderColor: "#000"
     }
   },
   addTaskBtn: {
-    color: grey[50],
-    borderColor: grey[50],
+    color: orange[500],
+    borderColor: orange[500],
     "&:hover": {
-      color: grey[50],
-      borderColor: grey[50]
+      color: orange[500],
+      borderColor: orange[500]
     },
     marginBottom: theme.spacing.unit * 2,
     outline: "none"
@@ -81,6 +82,10 @@ const styles = theme => ({
   loaderStyle: {
     display: "flex",
     justifyContent: "center"
+  },
+  chipStyle: {
+    background: grey[50],
+    border: `2px solid ${orange[500]}`
   }
 });
 
@@ -208,7 +213,10 @@ class HomePage extends React.Component {
                 <Typography variant="h5" inline>
                   {`Welcome ${user.firstName} ${user.lastName}`}
                 </Typography>
-                <Chip label={`Age: ${user.userAge}`} />
+                <Chip
+                  label={`Age: ${user.userAge}`}
+                  className={classes.chipStyle}
+                />
               </div>
 
               <Typography variant="body2" gutterBottom>

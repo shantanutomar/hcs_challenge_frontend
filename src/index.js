@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import green from "@material-ui/core/colors/green";
+import orange from "@material-ui/core/colors/orange";
 import { red } from "@material-ui/core/colors";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -18,12 +18,10 @@ import {
 
 const theme = createMuiTheme({
   palette: {
-    primary: green,
-    secondary: green,
+    primary: {
+      main: orange[500]
+    },
     error: red
-  },
-  status: {
-    danger: "orange"
   },
   typography: {
     useNextVariants: true

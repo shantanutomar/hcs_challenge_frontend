@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { Form } from "react-final-form";
 import CustomTextField from "../../Helpers/CustomTextField";
 import grey from "@material-ui/core/colors/grey";
+import { Link } from "react-router-dom";
+import orange from "@material-ui/core/colors/orange";
 
 /*
 Registration page for the user
@@ -22,7 +24,7 @@ const styles = theme => ({
   cardRoot: {
     width: "80%",
     margin: "24px auto",
-    background: grey[100]
+    background: grey[200]
   },
   container: {
     display: "flex",
@@ -35,15 +37,22 @@ const styles = theme => ({
     display: "block"
   },
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    "&:hover": {
+      color: orange[500],
+      borderColor: orange[500]
+    }
   },
   footerStyle: {
     marginTop: theme.spacing.unit,
     display: "flex",
     justifyContent: "center",
     "&>span": {
-      color: grey[100]
+      color: grey[200]
     }
+  },
+  TypographyStyle: {
+    color: orange[500]
   }
 });
 
@@ -84,7 +93,11 @@ class Register extends React.Component {
         <section>
           <Card className={classes.cardRoot} raised>
             <CardContent>
-              <Typography variant="h6" gutterBottom>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.TypographyStyle}
+              >
                 Healthcare Systems Registration
               </Typography>
               <Form
@@ -152,6 +165,17 @@ class Register extends React.Component {
                       type="submit"
                     >
                       Register
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      className={classes.button}
+                      size="small"
+                      to="/login"
+                      component={Link}
+                      // onClick={this.redirectToLogin}
+                    >
+                      Login
                     </Button>
                   </form>
                 )}

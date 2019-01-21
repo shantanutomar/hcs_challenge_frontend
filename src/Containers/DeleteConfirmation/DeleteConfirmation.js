@@ -7,6 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import grey from "@material-ui/core/colors/grey";
 import { withStyles } from "@material-ui/core/styles";
+import orange from "@material-ui/core/colors/orange";
+import { withTheme } from "@material-ui/core/styles";
 /*
 Component handles Delete Task flow
 */
@@ -17,7 +19,12 @@ const styles = theme => ({
   },
   dialogPaper: {
     width: "80%",
-    background: grey[100]
+    background: grey[200]
+  },
+  TypographyStyle: {
+    "&>span": {
+      color: orange[500]
+    }
   }
 });
 
@@ -36,7 +43,7 @@ class DeleteConfirmation extends React.Component {
           }}
         >
           <DialogTitle id="alert-dialog-title">
-            {"Delete Confirmation?"}
+            <span>Delete Confirmation?</span>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -47,6 +54,7 @@ class DeleteConfirmation extends React.Component {
             <Button
               onClick={this.props.closeDeleteConfirmModal}
               color="primary"
+              variant="outlined"
             >
               No
             </Button>
@@ -54,6 +62,7 @@ class DeleteConfirmation extends React.Component {
               onClick={this.props.handleDeleteTask}
               color="primary"
               autoFocus
+              variant="outlined"
             >
               Yes
             </Button>
@@ -64,4 +73,4 @@ class DeleteConfirmation extends React.Component {
   }
 }
 
-export default withStyles(styles)(DeleteConfirmation);
+export default withTheme()(withStyles(styles)(DeleteConfirmation));
