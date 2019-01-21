@@ -9,6 +9,10 @@ import PrivateRoute from "./Containers/PrivateRoute/PrivateRoute";
 import HomePage from "./Containers/HomePage/HomePage";
 import MessageSnackbar from "./Containers/MessageSnackbar/MessageSnackbar";
 
+/*
+Main App component 
+*/
+
 class App extends Component {
   render() {
     return (
@@ -31,4 +35,3 @@ class App extends Component {
 }
 
 export default withTheme()(App);
-// export default App;

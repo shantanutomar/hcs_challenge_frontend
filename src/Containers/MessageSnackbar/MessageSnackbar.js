@@ -16,6 +16,10 @@ import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import { hideSnackBottom } from "../../Store/Actions/appActions";
 
+/*
+Snackbar that will be displayed at the bottom of the screen everytime a message needs to be shown to user
+*/
+
 function TransitionUp(props) {
   return <Slide {...props} direction="up" />;
 }

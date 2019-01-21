@@ -34,10 +34,6 @@ let { store, persistor } = createStore();
 
 customAxios.interceptors.response.use(
   response => {
-    console.log(response);
-    // store.dispatch(hideSnackBottom());
-    // let toastMessage = response.data.message;
-    // store.dispatch(showMessageSnackBottom(toastMessage, "success", 3000));
     return response;
   },
   error => {

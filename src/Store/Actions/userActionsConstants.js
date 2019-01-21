@@ -1,3 +1,6 @@
+/*
+Constants for user actions
+*/
 export const userActionsConstants = {
   REGISTER_REQUEST: "REGISTER_REQUEST",
   REGISTER_SUCCESS: "REGISTER_SUCCESS",

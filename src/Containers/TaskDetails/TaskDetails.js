@@ -11,12 +11,20 @@ import { API_PATH } from "../../api";
 import { connect } from "react-redux";
 import { withTheme } from "@material-ui/core/styles";
 import distanceInWords from "date-fns/distance_in_words";
+import { showMessageSnackBottom } from "../../Store/Actions/appActions";
+import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
+import grey from "@material-ui/core/colors/grey";
+
+/*
+Component that renders each Task details
+*/
 
 const styles = theme => ({
   paper: {
     marginBottom: theme.spacing.unit * 2,
     padding: theme.spacing.unit * 2,
-    overflowWrap: "break-word"
+    overflowWrap: "break-word",
+    background: grey[100]
   },
   card: {
     minWidth: 275
@@ -47,7 +55,8 @@ const styles = theme => ({
 
 class TaskDetails extends React.Component {
   state = {
-    isEditModelOpen: false
+    isEditModelOpen: false,
+    isDeleteConfirmOpen: false
   };
   handleTaskDelete = () => {
     customAxios
@@ -61,6 +70,7 @@ class TaskDetails extends React.Component {
       .then(
         () => {
           console.log("Task Deleted");
+          this.props.taskDeletedSuccess();
           this.props.fetchUserTasks();
         },
         error => {
@@ -86,6 +96,7 @@ class TaskDetails extends React.Component {
       .then(
         () => {
           console.log("Task Updated");
+          this.props.taskUpdatedSuccess();
           this.props.fetchUserTasks();
         },
         error => {
@@ -108,6 +119,17 @@ class TaskDetails extends React.Component {
       isEditModelOpen: false
     });
   };
+  closeDeleteModal = () => {
+    this.setState({
+      isDeleteOpen: false
+    });
+  };
+  openDeleteModel = () => {
+    this.setState({
+      isDeleteOpen: true
+    });
+  };
+
   render() {
     const { classes, taskData } = this.props;
     console.log(Date.now());
@@ -121,7 +143,12 @@ class TaskDetails extends React.Component {
           closeUpdateModel={this.closeUpdateModal}
           taskData={this.props.taskData}
         />
-        <Paper className={classes.paper}>
+        <DeleteConfirmation
+          isDeleteOpen={this.state.isDeleteOpen}
+          handleDeleteTask={this.handleTaskDelete}
+          closeDeleteConfirmModal={this.closeDeleteModal}
+        />
+        <Paper className={classes.paper} raised>
           <Typography variant="body1">{taskData.taskDesc}</Typography>
           <div className={classes.cardFooter}>
             <Typography variant="caption" inline>
@@ -131,7 +158,7 @@ class TaskDetails extends React.Component {
               )}`}
             </Typography>
             <span>
-              <IconButton aria-label="Delete" onClick={this.handleTaskDelete}>
+              <IconButton aria-label="Delete" onClick={this.openDeleteModel}>
                 <DeleteIcon />
               </IconButton>
               <IconButton aria-label="Edit" onClick={this.openUpdateModel}>
@@ -150,7 +177,17 @@ var mapStateToProps = state => {
     user: state.userReducer.user.data
   };
 };
+
+var mapDispatchToProps = dispatch => {
+  return {
+    taskDeletedSuccess: () =>
+      dispatch(showMessageSnackBottom("Task Deleted", "success", 3000)),
+    taskUpdatedSuccess: () =>
+      dispatch(showMessageSnackBottom("Task Updated", "success", 3000))
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withTheme()(withStyles(styles)(TaskDetails)));

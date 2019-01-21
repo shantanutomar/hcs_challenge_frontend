@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-// import color from "@material-ui/core/colors/pink";
+
+/*
+This is customized Loader which will be shown everytime when data is loaded
+*/
 
 const styles = theme => ({
   progress: {

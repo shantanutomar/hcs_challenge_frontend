@@ -4,6 +4,10 @@ import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
 import thunkMiddleware from "redux-thunk";
 
+/*
+Redux Store creation
+*/
+
 const persistConfig = {
   key: "user",
   storage

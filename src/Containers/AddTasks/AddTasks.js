@@ -5,13 +5,18 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
+import grey from "@material-ui/core/colors/grey";
 
+/*
+Component handles Add Task flow
+*/
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 4
   },
   dialogPaper: {
-    width: "80%"
+    width: "80%",
+    background: grey[100]
   }
 });
 

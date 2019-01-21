@@ -1,5 +1,9 @@
 import { userActionsConstants } from "../Actions/userActionsConstants";
 
+/*
+Reducer handling User actions
+*/
+
 const initialState = {
   user: {},
   loggedIn: false,

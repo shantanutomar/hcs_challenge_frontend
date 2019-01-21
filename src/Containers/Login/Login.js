@@ -11,6 +11,11 @@ import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
+import grey from "@material-ui/core/colors/grey";
+
+/*
+This is the login form for user authentication
+*/
 
 const styles = theme => ({
   root: {
@@ -18,7 +23,8 @@ const styles = theme => ({
     margin: "0 auto"
   },
   cardRoot: {
-    padding: theme.spacing.unit * 4
+    padding: theme.spacing.unit * 4,
+    background: grey[100]
   },
   container: {
     display: "flex",
@@ -34,6 +40,14 @@ const styles = theme => ({
   },
   input: {
     display: "none"
+  },
+  footerStyle: {
+    marginTop: theme.spacing.unit,
+    display: "flex",
+    justifyContent: "center",
+    "&>span": {
+      color: grey[100]
+    }
   }
 });
 
@@ -69,7 +83,7 @@ class Login extends React.Component {
               <Card className={classes.cardRoot} raised>
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
-                    HealthCareSystems
+                    Healthcare Systems
                   </Typography>
                   <Form
                     onSubmit={this.handleSubmit}
@@ -125,7 +139,9 @@ class Login extends React.Component {
                 </CardContent>
               </Card>
             </section>
-            <footer />
+            <footer className={classes.footerStyle}>
+              <Typography variant="caption">© HealthcareSystems</Typography>
+            </footer>
           </React.Fragment>
         )}
       </div>

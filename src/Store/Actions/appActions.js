@@ -1,5 +1,9 @@
 import { appActionsConstants } from "./appActionsConstants";
 
+/*
+Handles the actions for displaying user notifications
+*/
+
 export const showMessageSnackBottom = (
   message,
   intent = "info",

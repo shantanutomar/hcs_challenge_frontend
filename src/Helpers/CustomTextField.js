@@ -4,6 +4,10 @@ import TextField from "@material-ui/core/TextField";
 import { Field } from "react-final-form";
 import red from "@material-ui/core/colors/red";
 
+/*
+Customized Text field that will be used in all the forms for user input
+*/
+
 const styles = theme => ({
   textFieldRoot: {
     display: "flex",

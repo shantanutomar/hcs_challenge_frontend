@@ -15,6 +15,11 @@ import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
 import Loader from "../Loader/Loader";
 import TaskDetails from "../TaskDetails/TaskDetails";
+import { showMessageSnackBottom } from "../../Store/Actions/appActions";
+
+/*
+This is the homepage where user enters when logged in
+*/
 
 const styles = theme => ({
   appBarStyles: {
@@ -37,7 +42,9 @@ const styles = theme => ({
   },
   aboutUser: {
     padding: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
+    background: grey[100],
+    overflowWrap: "break-word"
   },
   button: {
     color: "#000",
@@ -138,6 +145,7 @@ class HomePage extends React.Component {
         response => {
           this.fetchUserTasks();
           this.closeAddModel();
+          this.props.taskAddedSuccess();
         },
         error => {
           console.log("In error");
@@ -162,6 +170,14 @@ class HomePage extends React.Component {
           />
         );
       });
+    } else {
+      userTasks = (
+        <div className={classes.loaderStyle}>
+          <Typography variant="h4" gutterBottom className={classes.white}>
+            No tasks available
+          </Typography>
+        </div>
+      );
     }
 
     return (
@@ -170,7 +186,7 @@ class HomePage extends React.Component {
           <Toolbar className={classes.appBarStyles}>
             <div className={classes.grow}>
               <Typography variant="h6" color="inherit" inline>
-                HealthCareSystems
+                Healthcare Systems
               </Typography>
             </div>
 
@@ -187,9 +203,9 @@ class HomePage extends React.Component {
         </AppBar>
         <section className={classes.rootSection}>
           {user && (
-            <Paper className={classes.aboutUser}>
+            <Paper className={classes.aboutUser} raised>
               <div className={classes.chipNameContainer}>
-                <Typography variant="h4" inline>
+                <Typography variant="h5" inline>
                   {`Welcome ${user.firstName} ${user.lastName}`}
                 </Typography>
                 <Chip label={`Age: ${user.userAge}`} />
@@ -239,7 +255,9 @@ var mapStateToProps = state => {
 };
 var mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(userActions.logout())
+    logout: () => dispatch(userActions.logout()),
+    taskAddedSuccess: () =>
+      dispatch(showMessageSnackBottom("Task Added", "success", 3000))
   };
 };
 export default connect(

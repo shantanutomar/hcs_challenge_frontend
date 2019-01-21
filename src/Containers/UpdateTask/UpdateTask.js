@@ -5,6 +5,11 @@ import Button from "@material-ui/core/Button";
 import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 import Dialog from "@material-ui/core/Dialog";
+import grey from "@material-ui/core/colors/grey";
+
+/*
+Component handles update task flow
+*/
 
 const getDate = dateStr => dateStr.slice(0, 10);
 
@@ -13,7 +18,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4
   },
   dialogPaper: {
-    width: "80%"
+    width: "80%",
+    background: grey[100]
   }
 });
 

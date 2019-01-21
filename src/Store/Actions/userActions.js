@@ -2,6 +2,11 @@ import { userActionsConstants } from "./userActionsConstants";
 import { history } from "../../Helpers/history";
 import customAxios from "../../Helpers/customAxios";
 import { API_PATH } from "../../api";
+import { showMessageSnackBottom } from "./appActions";
+
+/*
+Handling all the user actions like authentication, createUser etc
+*/
 
 export const userActions = {
   authenticate,
@@ -10,8 +15,14 @@ export const userActions = {
 };
 
 export function logout() {
-  localStorage.removeItem("user");
-  return { type: userActionsConstants.USER_LOGOUT };
+  return dispatch => {
+    localStorage.removeItem("user");
+    dispatch(showMessageSnackBottom("Logged Out", "success", 3000));
+    dispatch(logout());
+  };
+  function logout() {
+    return { type: userActionsConstants.USER_LOGOUT };
+  }
 }
 function authenticate(username, password) {
   return dispatch => {
@@ -28,11 +39,11 @@ function authenticate(username, password) {
       )
       .then(
         response => {
+          dispatch(showMessageSnackBottom("Logged In", "success", 3000));
           dispatch(success(response));
           history.push("/");
         },
         error => {
-          console.log("In error");
           dispatch(failure(error));
         }
       );
@@ -65,13 +76,16 @@ function register(userData) {
       )
       .then(
         user => {
+          dispatch(
+            showMessageSnackBottom("Registered Successfully", "success", 3000)
+          );
+
           dispatch(success());
           history.push("/login");
         },
         error => {
           console.log("In error");
           dispatch(failure(error));
-          // alert(error);
         }
       );
   };

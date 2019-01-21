@@ -1,4 +1,7 @@
 import { appActionsConstants } from "../Actions/appActionsConstants";
+/*
+Reducer for handling alert actions 
+*/
 
 const initialAppGlobalsState = {
   showSnackBottom: false,
