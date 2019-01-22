@@ -12,6 +12,7 @@ import CustomTextField from "../../Helpers/CustomTextField";
 import grey from "@material-ui/core/colors/grey";
 import { Link } from "react-router-dom";
 import orange from "@material-ui/core/colors/orange";
+import CustomPasswordTextField from "../CustomPasswordTextField/CustomPasswordTextField";
 
 /*
 Registration page for the user
@@ -29,12 +30,6 @@ const styles = theme => ({
   container: {
     display: "flex",
     flexDirection: "column"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    height: 50,
-    display: "block"
   },
   button: {
     margin: theme.spacing.unit,
@@ -102,7 +97,14 @@ class Register extends React.Component {
               </Typography>
               <Form
                 onSubmit={this.handleSubmit}
-                initialValues={{ userName: "", password: "" }}
+                initialValues={{
+                  userName: "",
+                  password: "",
+                  firstName: "",
+                  lastName: "",
+                  userAge: null,
+                  userDetails: ""
+                }}
                 validate={this.validate}
                 render={({ submitting, pristine, values }) => (
                   <form
@@ -139,12 +141,11 @@ class Register extends React.Component {
                         label: "User Name"
                       }}
                     />
-                    <CustomTextField
+                    <CustomPasswordTextField
                       keyName="password"
                       textFieldProps={{
                         required: true,
-                        label: "Password",
-                        type: "password"
+                        label: "Password"
                       }}
                     />
                     <CustomTextField
@@ -173,7 +174,6 @@ class Register extends React.Component {
                       size="small"
                       to="/login"
                       component={Link}
-                      // onClick={this.redirectToLogin}
                     >
                       Login
                     </Button>

@@ -13,6 +13,8 @@ import CustomTextField from "../../Helpers/CustomTextField";
 import { Form } from "react-final-form";
 import grey from "@material-ui/core/colors/grey";
 import orange from "@material-ui/core/colors/orange";
+import CustomPasswordTextField from "../CustomPasswordTextField/CustomPasswordTextField";
+
 /*
 This is the login form for user authentication
 */
@@ -30,20 +32,12 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column"
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    height: 50
-  },
   button: {
     marginBottom: theme.spacing.unit,
     "&:hover": {
       color: orange[500],
       borderColor: orange[500]
     }
-  },
-  input: {
-    display: "none"
   },
   footerStyle: {
     marginTop: theme.spacing.unit,
@@ -103,7 +97,6 @@ class Login extends React.Component {
                     render={({ submitting, pristine, values }) => (
                       <form
                         className={classes.container}
-                        noValidate
                         autoComplete="off"
                         onSubmit={event => this.handleSubmit(values, event)}
                       >
@@ -114,13 +107,11 @@ class Login extends React.Component {
                             label: "Username"
                           }}
                         />
-
-                        <CustomTextField
+                        <CustomPasswordTextField
                           keyName="password"
                           textFieldProps={{
                             required: true,
-                            label: "Password",
-                            type: "password"
+                            label: "Password"
                           }}
                         />
                         <Button
