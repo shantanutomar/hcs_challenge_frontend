@@ -14,10 +14,16 @@ export const userActions = {
   register
 };
 
-export function logout() {
+export function logout(errorType) {
+  let toastMessage = "";
+  if (errorType === "success") {
+    toastMessage = "Logged Out";
+  } else if (errorType === "error") {
+    toastMessage = "Session timed out. Please relogin";
+  }
   return dispatch => {
     localStorage.removeItem("user");
-    dispatch(showMessageSnackBottom("Logged Out", "success", 3000));
+    dispatch(showMessageSnackBottom(toastMessage, errorType, 3000));
     dispatch(logout());
   };
   function logout() {

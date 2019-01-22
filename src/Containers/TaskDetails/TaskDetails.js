@@ -54,6 +54,7 @@ const styles = theme => ({
 });
 
 class TaskDetails extends React.Component {
+  isComponentMounted = false;
   state = {
     isEditModelOpen: false,
     isDeleteConfirmOpen: false
@@ -74,7 +75,10 @@ class TaskDetails extends React.Component {
           this.props.fetchUserTasks();
         },
         error => {
-          console.log("In error");
+          if (this.isComponentMounted) {
+            // Only if component is mounted and error handling is required
+            console.log("In error");
+          }
         }
       );
   };
@@ -100,7 +104,10 @@ class TaskDetails extends React.Component {
           this.props.fetchUserTasks();
         },
         error => {
-          console.log("In error");
+          if (this.isComponentMounted) {
+            // Only if component is mounted and error handling is required
+            console.log("In error");
+          }
         }
       );
 
@@ -128,6 +135,12 @@ class TaskDetails extends React.Component {
     this.setState({
       isDeleteConfirmOpen: true
     });
+  };
+  componentWillUnmount = () => {
+    this.isComponentMounted = false;
+  };
+  componentDidMount = () => {
+    this.isComponentMounted = true;
   };
 
   render() {

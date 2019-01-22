@@ -90,6 +90,7 @@ const styles = theme => ({
 });
 
 class HomePage extends React.Component {
+  isComponentMounted = false;
   state = {
     isAddOpen: false,
     userTasks: [],
@@ -112,7 +113,8 @@ class HomePage extends React.Component {
           this.setState({ userTasks: tasks.data, isLoadingTasks: false });
         },
         error => {
-          this.setState({ isLoadingTasks: false, userTasks: [] });
+          if (this.isComponentMounted)
+            this.setState({ isLoadingTasks: false, userTasks: [] });
         }
       );
   };
@@ -127,7 +129,11 @@ class HomePage extends React.Component {
     });
   };
   componentDidMount = () => {
+    this.isComponentMounted = true;
     this.fetchUserTasks();
+  };
+  componentWillUnmount = () => {
+    this.isComponentMounted = false;
   };
   handleLogout = () => {
     this.props.logout();
@@ -153,7 +159,10 @@ class HomePage extends React.Component {
           this.props.taskAddedSuccess();
         },
         error => {
-          console.log("In error");
+          if (this.isComponentMounted) {
+            // Only if component is mounted and error handling is required
+            console.log("In error");
+          }
         }
       );
 
@@ -263,7 +272,7 @@ var mapStateToProps = state => {
 };
 var mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(userActions.logout()),
+    logout: () => dispatch(userActions.logout("success")),
     taskAddedSuccess: () =>
       dispatch(showMessageSnackBottom("Task Added", "success", 3000))
   };

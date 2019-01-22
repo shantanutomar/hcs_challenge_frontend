@@ -15,6 +15,7 @@ import {
   hideSnackBottom,
   showMessageSnackBottom
 } from "./Store/Actions/appActions";
+import { userActions } from "./Store/Actions/userActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -35,10 +36,15 @@ customAxios.interceptors.response.use(
     return response;
   },
   error => {
-    store.dispatch(hideSnackBottom());
-    let toastMessage = error.response.data.message;
-    store.dispatch(showMessageSnackBottom(toastMessage, "error", 3000));
-    return Promise.reject(error);
+    if (error.response.status === 401) {
+      store.dispatch(userActions.logout("error"));
+      return Promise.reject(error);
+    } else {
+      store.dispatch(hideSnackBottom());
+      let toastMessage = error.response.data.message;
+      store.dispatch(showMessageSnackBottom(toastMessage, "error", 3000));
+      return Promise.reject(error);
+    }
   }
 );
 
