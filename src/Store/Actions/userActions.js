@@ -43,16 +43,14 @@ function authenticate(username, password) {
           method: "POST"
         }
       )
-      .then(
-        response => {
-          dispatch(showMessageSnackBottom("Logged In", "success", 3000));
-          dispatch(success(response));
-          history.push("/");
-        },
-        error => {
-          dispatch(failure(error));
-        }
-      );
+      .then(response => {
+        dispatch(showMessageSnackBottom("Logged In", "success", 3000));
+        dispatch(success(response));
+        history.push("/");
+      })
+      .catch(error => {
+        dispatch(failure(error));
+      });
   };
 
   function request() {
@@ -79,20 +77,17 @@ function register(userData) {
           method: "POST"
         }
       )
-      .then(
-        user => {
-          dispatch(
-            showMessageSnackBottom("Registered Successfully", "success", 3000)
-          );
-
-          dispatch(success());
-          history.push("/login");
-        },
-        error => {
-          console.log("In error");
-          dispatch(failure(error));
-        }
-      );
+      .then(user => {
+        dispatch(
+          showMessageSnackBottom("Registered Successfully", "success", 3000)
+        );
+        dispatch(success());
+        history.push("/login");
+      })
+      .catch(error => {
+        console.log("In error");
+        dispatch(failure(error));
+      });
   };
 
   function request() {

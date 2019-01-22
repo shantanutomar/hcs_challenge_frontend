@@ -108,15 +108,13 @@ class HomePage extends React.Component {
         },
         method: "GET"
       })
-      .then(
-        tasks => {
-          this.setState({ userTasks: tasks.data, isLoadingTasks: false });
-        },
-        error => {
-          if (this.isComponentMounted)
-            this.setState({ isLoadingTasks: false, userTasks: [] });
-        }
-      );
+      .then(tasks => {
+        this.setState({ userTasks: tasks.data, isLoadingTasks: false });
+      })
+      .catch(error => {
+        if (this.isComponentMounted)
+          this.setState({ isLoadingTasks: false, userTasks: [] });
+      });
   };
   openAddModel = () => {
     this.setState({
@@ -152,19 +150,17 @@ class HomePage extends React.Component {
           method: "POST"
         }
       )
-      .then(
-        response => {
-          this.fetchUserTasks();
-          this.closeAddModel();
-          this.props.taskAddedSuccess();
-        },
-        error => {
-          if (this.isComponentMounted) {
-            // Only if component is mounted and error handling is required
-            console.log("In error");
-          }
+      .then(response => {
+        this.fetchUserTasks();
+        this.closeAddModel();
+        this.props.taskAddedSuccess();
+      })
+      .catch(error => {
+        if (this.isComponentMounted) {
+          // Only if component is mounted and error handling is required
+          console.log("In error");
         }
-      );
+      });
 
     this.setState({
       isUpdateTaskOpen: true,

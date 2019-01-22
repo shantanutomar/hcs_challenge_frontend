@@ -68,19 +68,17 @@ class TaskDetails extends React.Component {
         },
         method: "DELETE"
       })
-      .then(
-        () => {
-          console.log("Task Deleted");
-          this.props.taskDeletedSuccess();
-          this.props.fetchUserTasks();
-        },
-        error => {
-          if (this.isComponentMounted) {
-            // Only if component is mounted and error handling is required
-            console.log("In error");
-          }
+      .then(() => {
+        console.log("Task Deleted");
+        this.props.taskDeletedSuccess();
+        this.props.fetchUserTasks();
+      })
+      .catch(error => {
+        if (this.isComponentMounted) {
+          // Only if component is mounted and error handling is required
+          console.log("In error");
         }
-      );
+      });
   };
   handleTaskUpdate = (event, updateData) => {
     event.preventDefault();
@@ -97,19 +95,17 @@ class TaskDetails extends React.Component {
           method: "PUT"
         }
       )
-      .then(
-        () => {
-          console.log("Task Updated");
-          this.props.taskUpdatedSuccess();
-          this.props.fetchUserTasks();
-        },
-        error => {
-          if (this.isComponentMounted) {
-            // Only if component is mounted and error handling is required
-            console.log("In error");
-          }
+      .then(() => {
+        console.log("Task Updated");
+        this.props.taskUpdatedSuccess();
+        this.props.fetchUserTasks();
+      })
+      .catch(error => {
+        if (this.isComponentMounted) {
+          // Only if component is mounted and error handling is required
+          console.log("In error");
         }
-      );
+      });
 
     this.setState({
       isUpdateTaskOpen: true,
