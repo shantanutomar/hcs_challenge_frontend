@@ -76,7 +76,8 @@ class UpdateTask extends React.Component {
                     keyName="taskDesc"
                     textFieldProps={{
                       required: true,
-                      label: "Task Details"
+                      label: "Task Details",
+                      autoFocus: true
                     }}
                   />
                   <CustomTextField

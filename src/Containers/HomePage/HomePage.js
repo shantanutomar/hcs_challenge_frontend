@@ -17,6 +17,9 @@ import Loader from "../Loader/Loader";
 import TaskDetails from "../TaskDetails/TaskDetails";
 import { showMessageSnackBottom } from "../../Store/Actions/appActions";
 import orange from "@material-ui/core/colors/orange";
+import SearchIcon from "@material-ui/icons/Search";
+import InputBase from "@material-ui/core/InputBase";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
 /*
 This is the homepage where user enters when logged in
@@ -86,6 +89,46 @@ const styles = theme => ({
   chipStyle: {
     background: grey[50],
     border: `2px solid ${orange[500]}`
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.2),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.3)
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: "auto"
+    }
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white"
+  },
+  inputRoot: {
+    color: "white",
+    width: "100%"
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 200
+    }
   }
 });
 
@@ -93,8 +136,12 @@ class HomePage extends React.Component {
   isComponentMounted = false;
   state = {
     isAddOpen: false,
-    userTasks: [],
-    isLoadingTasks: false
+    allUserTasks: [],
+    isLoadingTasks: false,
+    timeoutId: null,
+    searchInputText: "",
+    searchedUserTasks: [],
+    isSearchingTasks: false
   };
   fetchUserTasks = () => {
     this.setState({
@@ -109,11 +156,19 @@ class HomePage extends React.Component {
         method: "GET"
       })
       .then(tasks => {
-        this.setState({ userTasks: tasks.data, isLoadingTasks: false });
+        this.setState({
+          allUserTasks: tasks.data,
+          isLoadingTasks: false,
+          searchedUserTasks: []
+        });
       })
       .catch(error => {
         if (this.isComponentMounted)
-          this.setState({ isLoadingTasks: false, userTasks: [] });
+          this.setState({
+            isLoadingTasks: false,
+            allUserTasks: [],
+            searchedUserTasks: []
+          });
       });
   };
   openAddModel = () => {
@@ -167,23 +222,71 @@ class HomePage extends React.Component {
       isAddTaskOpen: true
     });
   };
-  render() {
-    const { classes, user } = this.props;
-    let userTasks = [];
-    if (this.state.userTasks.length) {
-      userTasks = this.state.userTasks.map(ele => {
+  searchInpChange = event => {
+    this.setState({
+      isSearchingTasks: true
+    });
+    if (this.state.timeoutId) {
+      clearTimeout(this.state.timeoutId);
+    }
+    const newValue = event.target.value;
+    const latestTimeoutId = setTimeout(() => {
+      let userTasksArray = [];
+      userTasksArray = this.state.allUserTasks.filter(ele => {
         return (
-          <TaskDetails
-            key={ele._id}
-            taskData={ele}
-            fetchUserTasks={this.fetchUserTasks}
-          />
+          ele.taskDesc
+            .toLowerCase()
+            .indexOf(this.state.searchInputText.toLowerCase()) !== -1
         );
       });
+      this.setState({
+        searchedUserTasks: userTasksArray,
+        isSearchingTasks: false
+      });
+    }, 300);
+    this.setState({
+      timeoutId: latestTimeoutId,
+      searchInputText: newValue
+    });
+  };
+  render() {
+    const { classes, user } = this.props;
+    let displayTasks = [],
+      userTasksComponent = null;
+    if (this.state.allUserTasks.length) {
+      if (this.state.searchedUserTasks.length) {
+        displayTasks = this.state.searchedUserTasks;
+      }
+      if (!this.state.searchInputText) {
+        displayTasks = this.state.allUserTasks;
+      }
+      if (
+        this.state.searchedUserTasks.length === 0 &&
+        this.state.searchInputText &&
+        !this.state.isSearchingTasks
+      ) {
+        userTasksComponent = (
+          <div className={classes.loaderStyle}>
+            <Typography variant="h6" gutterBottom className={classes.white}>
+              Task not found
+            </Typography>
+          </div>
+        );
+      } else {
+        userTasksComponent = displayTasks.map(ele => {
+          return (
+            <TaskDetails
+              key={ele._id}
+              taskData={ele}
+              fetchUserTasks={this.fetchUserTasks}
+            />
+          );
+        });
+      }
     } else {
-      userTasks = (
+      userTasksComponent = (
         <div className={classes.loaderStyle}>
-          <Typography variant="h4" gutterBottom className={classes.white}>
+          <Typography variant="h6" gutterBottom className={classes.white}>
             No tasks available
           </Typography>
         </div>
@@ -229,9 +332,24 @@ class HomePage extends React.Component {
               </Typography>
             </Paper>
           )}
-          <Typography className={classes.white} variant="h4" gutterBottom>
+          <Typography className={classes.white} variant="h6" gutterBottom>
             Your Tasks
           </Typography>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Tasks"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput
+              }}
+              onChange={this.searchInpChange}
+              value={this.state.searchInputText}
+              disabled={this.state.allUserTasks.length === 0 ? true : false}
+            />
+          </div>
           <div className={classes.horzDivider} />
           <AddTasks
             isAddOpen={this.state.isAddOpen}
@@ -252,7 +370,7 @@ class HomePage extends React.Component {
                 <Loader />
               </div>
             ) : (
-              userTasks
+              userTasksComponent
             )}
           </section>
         </section>
