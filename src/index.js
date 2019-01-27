@@ -22,7 +22,9 @@ const theme = createMuiTheme({
     primary: {
       main: orange[500]
     },
-    error: red
+    secondary: {
+      main: red[500]
+    }
   },
   typography: {
     useNextVariants: true

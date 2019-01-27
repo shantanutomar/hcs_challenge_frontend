@@ -89,7 +89,6 @@ class AddTasks extends React.Component {
                   disabled={submitting || pristine}
                   variant="outlined"
                   color="primary"
-                  className={classes.button}
                   size="small"
                   type="submit"
                 >

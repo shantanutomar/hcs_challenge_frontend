@@ -60,7 +60,7 @@ class DeleteConfirmation extends React.Component {
             </Button>
             <Button
               onClick={this.props.handleDeleteTask}
-              color="primary"
+              color="secondary"
               autoFocus
               variant="outlined"
             >
