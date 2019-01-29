@@ -1,0 +1,5 @@
+#Redirects for netlify to enable SPA routing.
+#This file is added to enable routes to different paths when website is hosted on netlify.
+#Make sure that in manifest.json file we should have : "start_url": "./index.html"
+
+/*    /index.html   200
