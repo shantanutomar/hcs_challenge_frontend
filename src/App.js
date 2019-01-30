@@ -22,7 +22,7 @@ class App extends Component {
           <Switch>
             <PrivateRoute
               exact
-              path="/"
+              path="https://url-resolve-changes.d1z993fyobkz3s.amplifyapp.com"
               renderFunc={routeProps => <HomePage {...routeProps} />}
             />
             <Route path="/login" component={Login} />
