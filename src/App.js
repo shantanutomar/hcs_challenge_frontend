@@ -13,7 +13,7 @@ import MessageSnackbar from "./Containers/MessageSnackbar/MessageSnackbar";
 Main App component 
 */
 
-const BASE_URL = "https://url-resolve-changes.d1z993fyobkz3s.amplifyapp.com";
+// const BASE_URL = "https://url-resolve-changes.d1z993fyobkz3s.amplifyapp.com";
 
 class App extends Component {
   render() {
@@ -24,11 +24,11 @@ class App extends Component {
           <Switch>
             <PrivateRoute
               exact
-              path={`${BASE_URL}/`}
+              path={`/`}
               renderFunc={routeProps => <HomePage {...routeProps} />}
             />
-            <Route path={`${BASE_URL}/login`} component={Login} />
-            <Route path={`${BASE_URL}/register`} component={Register} />
+            <Route path={`/login`} component={Login} />
+            <Route path={`/register`} component={Register} />
           </Switch>
         </Router>
       </div>
