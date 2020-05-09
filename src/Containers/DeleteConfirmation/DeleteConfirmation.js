@@ -19,13 +19,36 @@ const styles = theme => ({
   },
   dialogPaper: {
     width: "80%",
-    background: grey[200]
+    background: grey[200],
+    borderRadius: '10px',
   },
   TypographyStyle: {
     "&>span": {
       color: orange[500]
     }
+  },
+  deleteIcons: {
+    margin: '0 16px 13px 0',
+    border: '2px solid',
+    borderRadius: '5px',
+  },
+  yesButton: {
+    "&:hover": {
+      border: '2px solid #f44336',
+      borderRadius: '5px',  
+      backgroundColor: "#f44336",
+      color: "#eee"
+    }    
+  },
+  noButton: {
+    "&:hover": {
+      border: '2px solid #ff9800',
+      borderRadius: '5px',  
+      backgroundColor: "#ff9800",
+      color: "#eee"
+    }
   }
+
 });
 
 class DeleteConfirmation extends React.Component {
@@ -55,6 +78,7 @@ class DeleteConfirmation extends React.Component {
               onClick={this.props.closeDeleteConfirmModal}
               color="primary"
               variant="outlined"
+              className={[classes.deleteIcons, classes.noButton]}
             >
               No
             </Button>
@@ -63,6 +87,7 @@ class DeleteConfirmation extends React.Component {
               color="secondary"
               autoFocus
               variant="outlined"
+              className={[classes.deleteIcons, classes.yesButton]}
             >
               Yes
             </Button>

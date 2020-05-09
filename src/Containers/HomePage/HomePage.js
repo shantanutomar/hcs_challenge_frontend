@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { withTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Chip from "@material-ui/core/Chip";
-import grey from "@material-ui/core/colors/grey";
 import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -27,53 +26,62 @@ This is the homepage where user enters when logged in
 
 const styles = theme => ({
   appBarStyles: {
-    background: orange[500]
+    background: "#eee"
   },
   rootContainer: {
     width: "100%"
   },
   white: {
-    color: grey[200]
+    color: '#eee'
   },
   chipNameContainer: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: '8px'
   },
   rootSection: {
     padding: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 8
+    marginTop: theme.spacing.unit * 8,
+    position: 'fixed',
+    width: '100%',
+    backgroundColor: '#2d3d4e',
+    zIndex: '1',
+    borderBottom: '2px solid #eee',
   },
   aboutUser: {
-    padding: theme.spacing.unit * 2,
+    padding: '24px',
     marginBottom: theme.spacing.unit * 2,
-    background: grey[50],
-    overflowWrap: "break-word"
+    background: "#eee",
+    overflowWrap: "break-word",
+    borderRadius: '10px'
   },
   button: {
-    color: "#ffffff",
-    border: "1px solid #ffffff",
+    color: "#ff9800",
+    border: "2px solid #ff9800",
+    borderRadius: '5px',
+    outline: 'none',
     "&:hover": {
-      color: "#000",
-      borderColor: "#000"
+      backgroundColor: "#ff9800",
+      borderRadius: '5px',
+      color: "#eee",
+      border: "2px solid #ff9800",  
     }
   },
   addTaskBtn: {
     color: orange[500],
+    width: '120px',
     borderColor: orange[500],
+    border: '2px solid #ff9800',
     "&:hover": {
-      color: orange[500],
-      borderColor: orange[500]
+      color: "#eee",
+      borderColor: orange[500],
+      backgroundColor: orange[500],
+      border: '2px solid #ff9800',
     },
     marginBottom: theme.spacing.unit * 2,
-    outline: "none"
-  },
-  horzDivider: {
-    height: "1px",
-    width: "100%",
-    backgroundColor: grey[50],
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    outline: "none",
+    borderRadius: '5px',
   },
   root: {
     flexGrow: 1
@@ -87,8 +95,12 @@ const styles = theme => ({
     justifyContent: "center"
   },
   chipStyle: {
-    background: grey[50],
-    border: `2px solid ${orange[500]}`
+    border: '2px solid #ff9800',
+    padding: '4px',
+    fontSize: '16px',
+    background: '#ff9800',
+    fontWeight: '500',
+    color: '#fff',
   },
   search: {
     position: "relative",
@@ -97,11 +109,9 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.3)
     },
-    marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing.unit * 3,
       width: "auto"
     }
   },
@@ -117,18 +127,45 @@ const styles = theme => ({
   },
   inputRoot: {
     color: "white",
-    width: "100%"
+    width: "100%",
+    padding: '7px 0'
   },
   inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
+    marginLeft: '58px',
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
       width: 200
     }
+  },
+  tasksPlannerHeading: {
+    color: "#ff9800",
+    textTransform: "uppercase",
+  },
+  nameDetails: {
+    fontSize: '20px',
+    fontWeight: '500',
+    color: '#222',
+  },
+  userDetails: {
+    fontSize: '16px',
+    maxWidth: '75%'
+  },
+  tasksButtonCont: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '0 5px',
+    alignItems: 'center',
+  },
+  tasksRoot: {
+    // overflow: 'scroll',
+    marginTop: '345px',
+    padding: '0 20px',
+  },
+  tasksLabel: {
+    textTransform: 'uppercase',
+    color: "#eee",
+    fontSize: '18px',
   }
 });
 
@@ -287,7 +324,7 @@ class HomePage extends React.Component {
       userTasksComponent = (
         <div className={classes.loaderStyle}>
           <Typography variant="h6" gutterBottom className={classes.white}>
-            No tasks available
+            No task available. Add a task !!
           </Typography>
         </div>
       );
@@ -295,31 +332,31 @@ class HomePage extends React.Component {
 
     return (
       <div className={classes.rootContainer}>
-        <AppBar position="fixed">
-          <Toolbar className={classes.appBarStyles}>
-            <div className={classes.grow}>
-              <Typography variant="h6" color="inherit" inline>
-                Healthcare Systems
-              </Typography>
-            </div>
-
-            <Button
-              variant="outlined"
-              color="primary"
-              className={classes.button}
-              size="small"
-              onClick={this.handleLogout}
-            >
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
         <section className={classes.rootSection}>
+          <AppBar position="fixed">
+            <Toolbar className={classes.appBarStyles}>
+              <div className={classes.grow}>
+                <Typography variant="h6" inline className={classes.tasksPlannerHeading}>
+                  Tasks Planner
+                </Typography>
+              </div>
+
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.button}
+                size="small"
+                onClick={this.handleLogout}
+              >
+                Logout
+              </Button>
+            </Toolbar>
+          </AppBar>
           {user && (
             <Paper className={classes.aboutUser} raised="true">
               <div className={classes.chipNameContainer}>
-                <Typography variant="h5" inline>
-                  {`Welcome ${user.firstName} ${user.lastName}`}
+                <Typography variant="h5" inline className={classes.nameDetails}>
+                  {`${user.firstName} ${user.lastName}`}
                 </Typography>
                 <Chip
                   label={`Age: ${user.userAge}`}
@@ -327,14 +364,24 @@ class HomePage extends React.Component {
                 />
               </div>
 
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body2"  className={classes.userDetails}>
                 {user.userDetails}
               </Typography>
             </Paper>
           )}
-          <Typography className={classes.white} variant="h6" gutterBottom>
-            Your Tasks
-          </Typography>
+          <div className={classes.tasksButtonCont}>
+            <Typography variant="h6" gutterBottom className={classes.tasksLabel}>
+              Tasks Details
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              className={classes.addTaskBtn}
+              onClick={this.openAddModel}
+            >
+              Add Task
+            </Button>
+          </div>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -350,21 +397,8 @@ class HomePage extends React.Component {
               disabled={this.state.allUserTasks.length === 0 ? true : false}
             />
           </div>
-          <div className={classes.horzDivider} />
-          <AddTasks
-            isAddOpen={this.state.isAddOpen}
-            handleCreateTask={this.handleCreateTask}
-            closeAddModel={this.closeAddModel}
-          />
-          <Button
-            fullWidth
-            variant="outlined"
-            className={classes.addTaskBtn}
-            onClick={this.openAddModel}
-          >
-            Add Task
-          </Button>
-          <section>
+          </section>
+          <section className={classes.tasksRoot}>
             {this.state.isLoadingTasks ? (
               <div className={classes.loaderStyle}>
                 <Loader />
@@ -373,7 +407,11 @@ class HomePage extends React.Component {
               userTasksComponent
             )}
           </section>
-        </section>
+          <AddTasks
+            isAddOpen={this.state.isAddOpen}
+            handleCreateTask={this.handleCreateTask}
+            closeAddModel={this.closeAddModel}
+          />
       </div>
     );
   }

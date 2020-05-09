@@ -26,17 +26,19 @@ const styles = theme => ({
   },
   cardRoot: {
     padding: theme.spacing.unit * 4,
-    background: grey[200]
+    background: grey[200],
+    borderRadius: '10px'
   },
   container: {
     display: "flex",
     flexDirection: "column"
   },
   button: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: '10px',
     "&:hover": {
-      color: orange[500],
-      borderColor: orange[500]
+      color: '#eee',
+      borderColor: orange[500],
+      backgroundColor: orange[500]
     }
   },
   footerStyle: {
@@ -44,11 +46,21 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     "&>span": {
-      color: grey[200]
-    }
+      color: grey[200],
+      fontSize: '14px',
+    },
   },
-  TypographyStyle: {
-    color: orange[500]
+  tasksPlannerHeading: {
+    color: orange[500],
+    textAlign: 'center',
+    fontSize: '22px',
+    textTransform: 'uppercase'
+  },
+  subHeading: {
+    textAlign: 'left',
+    fontSize: '20px'
+  },
+  cardContentRoot: {
   }
 });
 
@@ -82,13 +94,20 @@ class Login extends React.Component {
             <header />
             <section>
               <Card className={classes.cardRoot} raised>
-                <CardContent>
+                <CardContent className={classes.cardContentRoot}>
                   <Typography
                     variant="h6"
                     gutterBottom
-                    className={classes.TypographyStyle}
+                    className={classes.tasksPlannerHeading}
                   >
-                    Healthcare Systems
+                    Tasks Planner
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    className={classes.subHeading}
+                  >
+                    Login
                   </Typography>
                   <Form
                     onSubmit={this.handleSubmit}
@@ -142,7 +161,7 @@ class Login extends React.Component {
               </Card>
             </section>
             <footer className={classes.footerStyle}>
-              <Typography variant="caption">© HealthcareSystems</Typography>
+              <Typography variant="caption">© Tasks Planner</Typography>
             </footer>
           </React.Fragment>
         )}

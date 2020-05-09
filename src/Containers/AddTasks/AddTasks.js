@@ -17,10 +17,24 @@ const styles = theme => ({
   },
   dialogPaper: {
     width: "80%",
-    background: grey[200]
+    background: grey[200],
+    borderRadius: '10px',
   },
   TypographyStyle: {
     color: orange[500]
+  },
+  submitButton: {
+    borderRadius: '5px',
+    marginTop: '5px',
+    borderColor: '#ff9800',
+    border: '2px solid #ff9800',
+    "&:hover": {
+      color: "#eee",
+      borderColor: orange[500],
+      backgroundColor: orange[500],
+      border: '2px solid #ff9800',
+
+    },
   }
 });
 
@@ -91,6 +105,7 @@ class AddTasks extends React.Component {
                   color="primary"
                   size="small"
                   type="submit"
+                  className={classes.submitButton}
                 >
                   Submit
                 </Button>

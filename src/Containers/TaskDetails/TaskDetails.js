@@ -13,7 +13,6 @@ import { withTheme } from "@material-ui/core/styles";
 import format from "date-fns/format";
 import { showMessageSnackBottom } from "../../Store/Actions/appActions";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
-import grey from "@material-ui/core/colors/grey";
 
 /*
 Component that renders each Task details
@@ -22,9 +21,10 @@ Component that renders each Task details
 const styles = theme => ({
   paper: {
     marginBottom: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2,
+    padding: '16px 30px',
     overflowWrap: "break-word",
-    background: grey[200]
+    background: "#eee",
+    borderRadius: '10px',
   },
   card: {
     minWidth: 275
@@ -50,6 +50,29 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  taskNameIconCont: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  iconButton: { 
+    padding: '5px',
+    marginRight: '3px',
+    border: "2px solid #eee",  
+    backgroundColor: "#eee",
+    "&:hover": {
+      border: "2px solid #555",  
+    }
+  },
+  taskDesc: {
+    fontWeight: 500,
+    fontSize: '18px'
+  },
+  taskDueDateStyle: {
+    color: '#555',
+    fontSize: '14px',
+    fontWeight: '500',
   }
 });
 
@@ -156,22 +179,24 @@ class TaskDetails extends React.Component {
           closeDeleteConfirmModal={this.closeDeleteModal}
         />
         <Paper className={classes.paper} raised="true">
-          <Typography variant="body1">{taskData.taskDesc}</Typography>
+          <div className={classes.taskNameIconCont}>
+            <Typography variant="body1" className={classes.taskDesc}>{taskData.taskDesc}</Typography>
+            <span>
+              <IconButton aria-label="Delete" onClick={this.openDeleteModel} className={classes.iconButton}>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton aria-label="Edit" onClick={this.openUpdateModel} className={classes.iconButton}>
+                <EditIcon />
+              </IconButton>
+            </span>
+          </div>
           <div className={classes.cardFooter}>
-            <Typography variant="caption" inline>
+            <Typography variant="caption" inline className={classes.taskDueDateStyle}>
               {`Due on ${format(
                 new Date(taskData.taskDueDate),
                 "Do MMM YYYY"
               )}`}
             </Typography>
-            <span>
-              <IconButton aria-label="Delete" onClick={this.openDeleteModel}>
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="Edit" onClick={this.openUpdateModel}>
-                <EditIcon />
-              </IconButton>
-            </span>
           </div>
         </Paper>
       </div>

@@ -69,7 +69,8 @@ const styles = theme => ({
   },
   message: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    fontSize: '14px'
   }
 });
 
