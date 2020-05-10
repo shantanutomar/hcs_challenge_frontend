@@ -28,6 +28,7 @@ const styles = theme => ({
     marginTop: '5px',
     borderColor: '#ff9800',
     border: '2px solid #ff9800',
+    color: "#ff9800",
     "&:hover": {
       color: "#eee",
       borderColor: orange[500],
@@ -35,6 +36,10 @@ const styles = theme => ({
       border: '2px solid #ff9800',
 
     },
+  },
+  disabled: {
+    color: '#555',
+    border: '2px solid'
   }
 });
 
@@ -102,12 +107,12 @@ class AddTasks extends React.Component {
                 <Button
                   disabled={submitting || pristine}
                   variant="outlined"
-                  color="primary"
                   size="small"
                   type="submit"
+                  classes={{disabled: classes.disabled}}
                   className={classes.submitButton}
                 >
-                  Submit
+                  Add
                 </Button>
               </form>
             )}

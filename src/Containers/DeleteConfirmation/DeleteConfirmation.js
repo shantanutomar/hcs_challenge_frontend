@@ -80,7 +80,7 @@ class DeleteConfirmation extends React.Component {
               variant="outlined"
               className={[classes.deleteIcons, classes.noButton]}
             >
-              No
+              Cancel
             </Button>
             <Button
               onClick={this.props.handleDeleteTask}
@@ -89,7 +89,7 @@ class DeleteConfirmation extends React.Component {
               variant="outlined"
               className={[classes.deleteIcons, classes.yesButton]}
             >
-              Yes
+              Delete
             </Button>
           </DialogActions>
         </Dialog>
